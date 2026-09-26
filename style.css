@@ -1,0 +1,233 @@
+:root {
+  --ink: #2b2a28;
+  --paper: #f3eee3;
+  --rail: #1b3654;
+  --rail-soft: #234873;
+  --rail-text: #eaf3fb;
+  --sage: #4fa3d1;
+  --clay: #c1502e;
+  --line: #dad2c0;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", "Noto Sans Thai", "Sarabun", sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  min-height: 480px;
+}
+
+.toolrail {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--rail);
+  color: var(--rail-text);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+}
+
+.brand {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.brand span { color: var(--sage); }
+
+.group-label {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  color: #b9b3a2;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.tool-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--rail-text);
+  font-size: 0.66rem;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.tool-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  stroke: currentColor;
+}
+.tool-btn:hover { background: rgba(255, 255, 255, 0.09); }
+.tool-btn.active {
+  background: rgba(107, 143, 113, 0.25);
+  border-color: var(--sage);
+  color: #fff;
+}
+
+input[type="color"] {
+  width: 100%;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+.swatch {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  padding: 0;
+}
+.swatch:hover {
+  transform: scale(1.08);
+  border-color: #fff;
+}
+.swatch.selected {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+}
+
+.mixer-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mixer-row input[type="color"] {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+.mixer-row input[type="range"] { flex: 1; }
+
+.mixer-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.mixer-preview {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+.mixer-preview-row .ghost-btn {
+  flex: 1;
+  padding: 8px 6px;
+  font-size: 0.78rem;
+}
+
+input[type="range"] { width: 100%; }
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.ghost-btn, .primary-btn {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: var(--rail-text);
+  padding: 9px 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.ghost-btn:hover { background: rgba(255, 255, 255, 0.08); }
+.ghost-btn.danger { color: #e2a37c; border-color: rgba(181, 101, 29, 0.5); }
+.ghost-btn.danger:hover { background: rgba(181, 101, 29, 0.18); }
+
+.primary-btn {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: #12180f;
+  font-weight: 600;
+}
+.primary-btn:hover { filter: brightness(1.08); }
+
+.hint {
+  font-size: 0.72rem;
+  color: #8f8a7c;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.canvas-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.canvas-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1100px;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 0 var(--line), 0 12px 30px rgba(43, 42, 40, 0.18);
+  overflow: hidden;
+}
+
+.canvas-stack canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+#previewCanvas { pointer-events: none; }
+
+@media (max-width: 720px) {
+  .app { flex-direction: column; }
+  .toolrail {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .tool-grid { grid-template-columns: repeat(9, 1fr); }
+  .swatches { grid-template-columns: repeat(10, 1fr); }
+  .actions { margin-top: 0; flex-direction: row; flex-wrap: wrap; }
+  .canvas-wrap { padding: 12px; height: 60vh; }
+}
